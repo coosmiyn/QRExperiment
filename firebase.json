@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "qr-experiment",
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -11,6 +12,10 @@
       "source": "**",
       "function": "app",
       "dynamicLinks": true
+    },
+    {
+      "source": "/zimnicea/**",
+      "dynamicLinks": "true"
     }]
   },
   "functions": {

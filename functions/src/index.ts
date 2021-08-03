@@ -12,7 +12,7 @@ admin.initializeApp();
 exports.app = functions.https.onRequest(app);
 
 app.get('/', async (req, res) => {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  //res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
   const date = new Date();
   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
   res.send(`
@@ -30,29 +30,56 @@ app.get('/', async (req, res) => {
   </html>`);
 });
 
-app.get(`/api/data/:location/opens`, async (req, res) => {
+app.get(`/:location`, async (req, res) =>
+{
+  const location = req.params.location;
+  const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
+  const docData = doc.data();
+
+  if (docData)
+  {
+    docData.OpenCount = docData.OpenCount + 1;
+    await admin.firestore().collection('Data').doc(`location`).update(docData);
+
+    res.redirect(`/api/data/${location}/opencount`);
+  }
+  else
+  {
+    console.log(`Cannot find ${req.params.location}`);
+    res.send("Error: Couldn't find document location");
+  }
+});
+
+app.get(`/api/data/:location/opencount`, async (req, res) => 
+{
   const doc = await admin.firestore().collection('Data').doc('Zimnicea').get();
   const docData = await doc.data();
-  // const date = new Date();
-  // const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-  res.json(docData);
+  if (docData)
+  {
+    res.json(docData);
+  }
+  else
+  {
+    console.log(`Cannot find ${req.params.location}`);
+    res.send("Error: Couldn't find document location");
+  }
 });
 
 // NOT TESTED YET
-app.post('/api/data/:location/opens', async (req, rest) =>
-{
-  const location = req.params.location;
+// app.post('/api/data/:location/opens', async (req, rest) =>
+// {
+//   const location = req.params.location;
   
-  const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
-  const docData = doc.data();
-  if (docData)
-  {
-    let opens = docData.Opens;
-    opens = opens + 1;
+//   const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
+//   const docData = doc.data();
+//   if (docData)
+//   {
+//     let opens = docData.Opens;
+//     opens = opens + 1;
 
-    await admin.firestore().collection('Data').doc(`${location}`).update( { Opens: opens} );
-  }
-})
+//     await admin.firestore().collection('Data').doc(`${location}`).update( { Opens: opens} );
+//   }
+// })
 
 //app.get('/api', (req, res) => {
   
