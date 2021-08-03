@@ -30,5 +30,11 @@ module.exports = {
     "indent": "warn",
     "semi": "warn",
     "spaced-comment": "off",
+    "no-multi-spaces": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "object-curly-spacing": "off",
+    "no-trailing-spaces": "off",
+    "brace-style": "off",
+
   },
 };

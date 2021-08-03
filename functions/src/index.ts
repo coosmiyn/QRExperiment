@@ -1,25 +1,59 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+import * as express from "express";
+//const cors = require('cors');
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const app = express();
+admin.initializeApp();
+//const router = express.Router();
+//app.use(cors);
+//Here we are configuring express to use body-parser as middle-ware.
 
-exports.bigben2 = functions.https.onRequest((req, res) => {
-  const hours = (new Date().getHours() % 12) + 1 //London is UTC + 1hr;
-  res.status(200).send(`<!doctype html>
-      <head>
-        <title>Time</title>
-      </head>
-      <body>
-        ${'BONG '.repeat(hours)}
-      </body>
-    </html>`);
-  });
+exports.app = functions.https.onRequest(app);
 
-exports.test2 = functions.https.onRequest((req, res) => {
-  res.status(200).send("Ceaules");
+app.get('/', async (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  const date = new Date();
+  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+  res.send(`
+    <!doctype html>
+    <head>
+      <title>Time</title>
+      <link rel="stylesheet" href="/style.css">
+      <script src="/script.js"></script>
+    </head>
+    <body>
+      <p>In London, the clock strikes:
+        <span id="bongs">${'BONG '.repeat(hours)}</span></p>
+      <button onClick="refresh(this)">Refresh</button>
+    </body>
+  </html>`);
 });
+
+app.get(`/api/data/:location/opens`, async (req, res) => {
+  const doc = await admin.firestore().collection('Data').doc('Zimnicea').get();
+  const docData = await doc.data();
+  // const date = new Date();
+  // const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+  res.json(docData);
+});
+
+// NOT TESTED YET
+app.post('/api/data/:location/opens', async (req, rest) =>
+{
+  const location = req.params.location;
+  
+  const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
+  const docData = doc.data();
+  if (docData)
+  {
+    let opens = docData.Opens;
+    opens = opens + 1;
+
+    await admin.firestore().collection('Data').doc(`${location}`).update( { Opens: opens} );
+  }
+})
+
+//app.get('/api', (req, res) => {
+  
+// });

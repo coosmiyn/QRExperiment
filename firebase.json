@@ -6,9 +6,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "appAssociation": "AUTO",
     "rewrites": [ {
-      "source": "/bigben2",
-      "function": "bigben2"
+      "source": "**",
+      "function": "app",
+      "dynamicLinks": true
     }]
   },
   "functions": {
