@@ -11,24 +11,24 @@ admin.initializeApp();
 
 exports.app = functions.https.onRequest(app);
 
-app.get('/', async (req, res) => {
-  //res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-  const date = new Date();
-  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-  res.send(`
-    <!doctype html>
-    <head>
-      <title>Time</title>
-      <link rel="stylesheet" href="/style.css">
-      <script src="/script.js"></script>
-    </head>
-    <body>
-      <p>In London, the clock strikes:
-        <span id="bongs">${'BONG '.repeat(hours)}</span></p>
-      <button onClick="refresh(this)">Refresh</button>
-    </body>
-  </html>`);
-});
+// app.get('/', async (req, res) => {
+//   //res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+//   const date = new Date();
+//   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+//   res.send(`
+//     <!doctype html>
+//     <head>
+//       <title>Time</title>
+//       <link rel="stylesheet" href="/style.css">
+//       <script src="/script.js"></script>
+//     </head>
+//     <body>
+//       <p>In London, the clock strikes:
+//         <span id="bongs">${'BONG '.repeat(hours)}</span></p>
+//       <button onClick="refresh(this)">Refresh</button>
+//     </body>
+//   </html>`);
+// });
 
 app.get(`/:location/:uid`, async (req, res) =>
 {
@@ -97,3 +97,8 @@ app.get(`/api/data/:location/opencount`, async (req, res) =>
 //app.get('/api', (req, res) => {
   
 // });
+
+app.get('*', (req, res) =>
+{
+  res.send("Error 404. Page not found");
+});
