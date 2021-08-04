@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
   </html>`);
 });
 
-app.get(`/:location`, async (req, res) =>
+app.get(`/:location/:uid`, async (req, res) =>
 {
   const location = req.params.location;
   const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
@@ -38,10 +38,22 @@ app.get(`/:location`, async (req, res) =>
 
   if (docData)
   {
-    docData.OpenCount = docData.OpenCount + 1;
-    await admin.firestore().collection('Data').doc(`location`).update(docData);
+    const UIDs = docData.UIDs;
+    if (!UIDs.includes(req.params.uid))
+    {
+      console.log("does not contain");
+      docData.OpenCount = docData.OpenCount + 1;
+      docData.UIDs.push(req.params.uid);
+      await admin.firestore().collection('Data').doc(`${location}`).update(docData);
 
-    res.redirect(`/api/data/${location}/opencount`);
+      res.send("Updated data");
+    }
+    else
+    {
+      res.send("Looks like you've opened this before you cheeky bastard");
+    }
+
+    //res.redirect(`/api/data/${location}/opencount`);
   }
   else
   {
@@ -52,7 +64,8 @@ app.get(`/:location`, async (req, res) =>
 
 app.get(`/api/data/:location/opencount`, async (req, res) => 
 {
-  const doc = await admin.firestore().collection('Data').doc('Zimnicea').get();
+  const location = req.params.location;
+  const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
   const docData = await doc.data();
   if (docData)
   {
