@@ -1,10 +1,21 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as express from "express";
+
+const exphbs = require('express-handlebars');
 //const cors = require('cors');
 
 const app = express();
 admin.initializeApp();
+
+app.engine('hbs', exphbs({
+  defaultLayout: 'main',
+  extname: '.hbs',
+}));
+
+app.set('view engine', 'hbs');
+
+app.use(express.static('views/images'));
 //const router = express.Router();
 //app.use(cors);
 //Here we are configuring express to use body-parser as middle-ware.
@@ -76,6 +87,11 @@ app.get(`/api/data/:location/opencount`, async (req, res) =>
     console.log(`Cannot find ${req.params.location}`);
     res.send("Error: Couldn't find document location");
   }
+});
+
+app.get('/home', (req, res) =>
+{
+  res.render('home.hbs');
 });
 
 // NOT TESTED YET
