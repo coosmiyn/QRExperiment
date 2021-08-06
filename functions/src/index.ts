@@ -15,7 +15,7 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs');
 
-app.use(express.static('views/images'));
+app.use(express.static('views/lib'));
 //const router = express.Router();
 //app.use(cors);
 //Here we are configuring express to use body-parser as middle-ware.
