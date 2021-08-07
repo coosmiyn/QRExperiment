@@ -24,15 +24,13 @@ window.onload = function()
         {
             let uid = user.uid;
 
-            let redirectString = "https://qr-experiment.web.app";
+            let redirectString = "https://qr-experiment.web.app" + '/' + uid;
 
             const params = urlParams.values();
             for (const value of params)
             {
                 redirectString = redirectString + '/' + value;
             }
-
-            redirectString = redirectString + '/' + uid;
 
             window.location.href = redirectString;
         } 

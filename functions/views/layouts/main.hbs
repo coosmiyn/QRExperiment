@@ -1,61 +1,11 @@
 <html lang="en">
     <head>
         <!-- <meta> tags> -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <title>Book Face</title>
-
-        <style>
-            @font-face {
-                font-family: "DefaultFont";
-                src: url("fonts/Roboto-Regular.ttf");
-            }
-
-            @font-face {
-                font-family: "DefaultFontBold";
-                src: url("fonts/Roboto-Medium.ttf");
-            }
-
-            body {
-                background-color:#736F4E;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            }
-            
-            .wrapperBox {
-                opacity: 80%;
-                background-color: darkgray;
-                border-radius: 25px;
-                margin: 5%;
-            }
-
-            .topnav {
-                background-color: #B4C292;
-                overflow: hidden;
-                position: fixed;
-                top: 0;
-                width: 100%;
-            }
-
-            .topnav a {
-                float: left;
-                color: #000000;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-                font-family: DefaultFont;
-            }
-
-            .topnav a:hover {
-                background-color: #736F4E;
-                color: #000000;
-            }
-
-            .topnav a.active {
-                background-color: #D17A22;
-                color: #000000;
-            }
-        </style>
+        <link rel="stylesheet" href="/css/main.css">
+        <title>QR Experiment</title>
     </head>
 
     <body>
@@ -66,5 +16,18 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+        <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+              if (prevScrollpos > currentScrollPos) {
+                document.getElementById("topnav").style.top = "0";
+              } else {
+                document.getElementById("topnav").style.top = "-60px";
+              }
+              prevScrollpos = currentScrollPos;
+            }
+        </script>
     </body>
 </html>

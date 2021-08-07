@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as express from "express";
+import * as path from "path";
 
 const exphbs = require('express-handlebars');
 //const cors = require('cors');
@@ -15,7 +16,9 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs');
 
-app.use(express.static('views/lib'));
+const publicPath = path.join(__dirname, '../views/lib');
+
+app.use(express.static(publicPath));
 //const router = express.Router();
 //app.use(cors);
 //Here we are configuring express to use body-parser as middle-ware.
@@ -41,7 +44,7 @@ exports.app = functions.https.onRequest(app);
 //   </html>`);
 // });
 
-app.get(`/:location/:uid`, async (req, res) =>
+app.get(`/:uid/:location`, async (req, res) =>
 {
   const location = req.params.location;
   const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
@@ -57,21 +60,33 @@ app.get(`/:location/:uid`, async (req, res) =>
       docData.UIDs.push(req.params.uid);
       await admin.firestore().collection('Data').doc(`${location}`).update(docData);
 
-      res.send("Updated data");
+      //res.send("Updated data");
     }
     else
     {
-      res.send("Looks like you've opened this before you cheeky bastard");
+      //res.send("Looks like you've opened this before you cheeky bastard");
     }
 
-    //res.redirect(`/api/data/${location}/opencount`);
+    res.redirect(`/api/data/${location}/opencount`);
+
+    //res.render('home.hbs', {location: "test", openCount: docData.OpenCount});
   }
   else
   {
     console.log(`Cannot find ${req.params.location}`);
-    res.send("Error: Couldn't find document location");
+    //res.send("Error: Couldn't find document location");
+
+    res.redirect('/api/error');
   }
 });
+
+// app.get('/:uid/:location/*', async (req, res) =>
+// {
+//   console.log('logging parameters');
+//   console.log(req.params);
+
+//   res.send("Printing parameters");
+// });
 
 app.get(`/api/data/:location/opencount`, async (req, res) => 
 {
@@ -80,7 +95,11 @@ app.get(`/api/data/:location/opencount`, async (req, res) =>
   const docData = await doc.data();
   if (docData)
   {
-    res.json(docData);
+    console.log(`Dirname is: ${__dirname}`);
+    console.log(`Path is ${publicPath}`);
+    // res.send(`Path is: ${publicPath}`);
+    res.render('home.hbs', {location: req.params.location, openCount: docData.OpenCount});
+    //res.json(docData);
   }
   else
   {
@@ -89,10 +108,23 @@ app.get(`/api/data/:location/opencount`, async (req, res) =>
   }
 });
 
-app.get('/home', (req, res) =>
-{
-  res.render('home.hbs');
-});
+// app.get('/home', async (req, res) =>
+// {
+//   const location = 'zimnicea';
+//   const locationParse = location.toUpperCase();
+
+//   const docRef = await admin.firestore().collection(`Data`).doc(`${location}`).get();
+//   const docData = docRef.data();
+//   if (docData)
+//   {
+//     const openCount = docData.OpenCount;
+//     res.render('home.hbs', {location: locationParse, openCount: openCount});
+//   }
+//   else
+//   {
+//     res.redirect('/api/error');
+//   }
+// });
 
 // NOT TESTED YET
 // app.post('/api/data/:location/opens', async (req, rest) =>

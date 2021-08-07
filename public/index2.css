@@ -1,0 +1,79 @@
+@font-face {
+    font-family: "DefaultFont";
+    src: url("fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "DefaultFontBold";
+    src: url("fonts/Roboto-Medium.ttf");
+}
+
+body {
+    background-color:#736F4E;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.contentWrapper {
+    opacity: 75%;
+    background-color: #B4C292;
+    border-radius: 25px;
+    margin: 5%;
+    margin-top: 100px;
+}
+
+.topnav {
+    background-color: #B4C292;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+
+.topnav a {
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
+    font-family: DefaultFont;
+}
+
+.topnav a:hover {
+    background-color: #736F4E;
+    color: #000000;
+}
+
+.topnav a.active {
+    background-color: #D17A22;
+    color: #000000;
+}
+
+h3 {
+    font-family: DefaultFontBold;
+    text-align: center;
+    font-size: xx-large;
+}
+
+p {
+    font-family: DefaultFontBold;
+    text-align: center;
+    font-size: larger;
+}
+
+.loader {
+    border: 16px solid #B4C292; /* Light grey */
+    border-top: 16px solid #D17A22; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    align-self: center;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

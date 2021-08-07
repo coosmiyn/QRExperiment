@@ -1,0 +1,45 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>QR Experiment</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="index2.css">
+    </head>
+
+    <body>
+        <div class="row">
+            <div class="col">
+                <div class="topnav" id="topnav">
+                    <a class="active" href="#test">Home</a>
+                    <a href="#index2">Test</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="contentWrapper">
+                    <h3>Title</h3>
+                    <p>Wow, ai dechis un cod QR random, gasit pe strada?</p>
+                    <p>Dupa calculele mele, l-ai gasit in {{location}}</p>
+                    <p>Daca esti curios cata lume a mai deschis coduri prin {{location}}, avem {{openCount}} deschise</p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+              if (prevScrollpos > currentScrollPos) {
+                document.getElementById("topnav").style.top = "0";
+              } else {
+                document.getElementById("topnav").style.top = "-60px";
+              }
+              prevScrollpos = currentScrollPos;
+            }
+            </script>
+    </body>
+</html>
