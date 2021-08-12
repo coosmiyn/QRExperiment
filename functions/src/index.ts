@@ -53,17 +53,45 @@ app.get(`/:uid/:location`, async (req, res) => {
 app.get(`/api/data/:location/opencount`, async (req, res) => {
   const location = req.params.location;
   const doc = await admin.firestore().collection('Data').doc(`${location}`).get();
-  const docData = await doc.data();
+  const docData = doc.data();
   
   if (docData) {
     // Render the page with the data, template making it easy to display data for any location.
-    res.render('home.hbs', {location: req.params.location, openCount: docData.OpenCount});
+    res.render('home.hbs', {location: req.params.location.toUpperCase(), openCount: docData.OpenCount});
   } 
   else {
     console.log(`Cannot find ${req.params.location}`);
     res.send("Error: Couldn't find document location");
   }
 });
+
+// -------------------- Clubhub Test --------------------
+
+app.get('/api/venues/:city/:venue', async (req, res) => {
+  const docRef = await admin.firestore().collection(`${req.params.city}`).doc(`${req.params.venue}`).get();
+  const docData = docRef.data();
+  if (docData) {
+    res.send(`Your data is\n${docData}`);
+  }
+  else {
+    res.send('Error. Venue not found in our database');
+  }
+});
+
+app.get('/api/venues/:city', async (req, res) => {
+  const collectionRef = await admin.firestore().collection(`${req.params.city}`).get();
+  const docs = collectionRef.docs;
+  let venuesString = "";
+  docs.forEach((doc) => {
+    venuesString = venuesString + ", " + doc.id;
+  });
+  if (venuesString != "") {
+    res.send(`Venues in ${req.params.city.toUpperCase()} are: ${venuesString}`);
+  }
+  else {
+    res.send('Error. No venues found.');
+  }
+})
 
 // If any other path is taken, display an error.
 app.get('*', (req, res) => {
