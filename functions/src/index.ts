@@ -39,7 +39,9 @@ app.get(`/:uid/:location`, async (req, res) => {
       //res.send("Looks like you've opened this before you cheeky bastard");
     }
 
+    //res.redirect(`/${location}/opencount`);
     res.redirect(`/api/data/${location}/opencount`);
+    //res.render('home.hbs', {location: req.params.location.toUpperCase(), openCount: docData.OpenCount});
   }
   // Error Handling in case the document reference is not valid.
   else {
