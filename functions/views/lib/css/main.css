@@ -29,6 +29,7 @@ body {
     top: 0;
     width: 100%;
     transition: top 0.3s; /* Transition effect when sliding down (and up) */
+    z-index: 1;
 }
 
 .topnav a {
@@ -55,6 +56,12 @@ h3 {
     font-family: DefaultFontBold;
     text-align: center;
     font-size: xx-large;
+}
+
+h4 {
+    font-family: DefaultFontBold;
+    text-align: center;
+    font-size: x-large;
 }
 
 p {

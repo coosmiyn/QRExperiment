@@ -1,8 +1,11 @@
 <div class="row">
     <div class="col">
         <div class="topnav" id="topnav">
-            <a class="active" href="#test">Home</a>
-            {{!-- <a href="#index2">Test</a> --}}
+            <a href="https://qr-experiment.web.app/home/{{uid}}/{{location}}">Home</a>
+            <a href="https://qr-experiment.web.app/visualisation/{{uid}}/{{location}}">Date Mesaje</a>
+            {{#if secretPage}}
+                <a href="https://qr-experiment.web.app/secretHomePage/{{uid}}/{{location}}">Pagina secretă (wooow, ce cringe)</a>
+            {{/if}}
         </div>
     </div>
 </div>
@@ -13,7 +16,14 @@
             <h3>Bine ai venit</h3>
             <p>Wow, ai dechis un cod QR random, găsit pe stradă?</p>
             <p>După calculele mele, l-ai găsit în {{location}}</p>
-            <p>Dacă ești curios câți oameni au mai deschis coduri prin {{location}}, sunt {{openCount}} deschise, de {{openCount}} către persoane diferite</p>
+            {{!-- <p>Dacă ești curios câți oameni au deschis coduri prin {{location}}, sunt {{openCount}} deschise, de {{openCount}} către persoane diferite</p> --}}
+            <p>Dacă ești curios câți oameni au deschis coduri în {{location}}</p>
+            <p>sunt.. uhm.. creeed.. {{openCount}} în total.</p>
+            <p>Dacă vrei niște date puțin mai exacte, apasă pe butonul "" din Navigation Bar de sus.</p>
+            <br>
+            <p>Crezi că ai găsit toate mesajele diferite din orașul tău? Poate că dacă ai scana fiecare mesaj ai avea o surpriză.</p>
+            <p style="color: #B4C292;">Nu, nu e nici un indiciu sau secret aici.</p>
         </div>
+            <p style="color: #736F4E;">Nu, nu e nici un indiciu sau secret aici.</p>
     </div>
 </div>

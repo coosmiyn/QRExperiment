@@ -23,7 +23,7 @@ window.onload = function()
         if (user) {
             let uid = user.uid;
 
-            let redirectString = "https://qr-experiment.web.app" + '/' + uid;
+            let redirectString = "https://qr-experiment.web.app/test/update" + '/' + uid;
 
             // Build the string based on the URL parameters.
             // Function supports future changes to the URL, 

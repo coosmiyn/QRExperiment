@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col">
+        <div class="topnav" id="topnav">
+            <a href="https://qr-experiment.web.app/home/{{uid}}/{{location}}">Home</a>
+            <a class="active" href="https://qr-experiment.web.app/visualisation/{{uid}}/{{location}}" style="pointer-events: none;">Date Mesaje</a>
+            {{#if secretPage}}
+                <a href="https://qr-experiment.web.app/secretHomePage/{{uid}}/{{location}}">Pagina secretă (wooow, ce cringe)</a>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="contentWrapper">
+            <h3>Visualisation</h3>
+            
+            <p>-- aici poți vedea de câte ori a fost deschis un cod, de pe dispozitive diferite. Atenție, poti vedea datele numai de la codurile accesate de tine --</p>
+            {{#each jsonObject}}
+                <h4>"{{this.Message}}": {{this.Opens}} deschise de către persoane diferite</h4>
+            {{/each}}
+
+            <p style="color: #B4C292;">Nu, nu e nici un indiciu sau secret aici.</p>
+        </div>
+            <p style="color: #736F4E;">Nu, nu e nici un indiciu sau secret aici.</p>
+    </div>
+</div>
